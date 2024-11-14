@@ -92,6 +92,8 @@ async def predict_match(request: Request, home_team: str = Form(...), away_team:
     #prediction = predict(home_team, away_team, season)
     return {
         "probabilidad_equipo_1": 20,
+        "probalidad_empate": 30,
+        "probabilidad_equipo_2": 50,
         "nombre_equipo_local":"America",
         "nombre_equipo_visitante":"Chivas",
         "goles_promedio": 3,
