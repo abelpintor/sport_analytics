@@ -172,16 +172,16 @@ test_data_y = np.array([0]) # 0 si perdió o empató, 1 si ganó
 
 # ### DESCOMENTAR PARA EJECUTAR
 # ## invertir datos para dejar al city que fue de local como equipo local, SOLO POR CONSISTENCIA, PERO NO AFECTA EL RESULTADO
-for i in range(0,len(test_data[0]),2):
-    test_data[0][i], test_data[0][i+1] = test_data[0][i+1], test_data[0][i]
-predict(
-    X=caracteristicas_equipo,
-    y = target_equipo, 
-    x_test=test_data, y_test=test_data_y, 
-    hidden_layers=6,  # 3
-    neuronas_por_capa=5, # 4
-    learning_rate=0.3
-)
+# for i in range(0,len(test_data[0]),2):
+#     test_data[0][i], test_data[0][i+1] = test_data[0][i+1], test_data[0][i]
+# predict(
+#     X=caracteristicas_equipo,
+#     y = target_equipo, 
+#     x_test=test_data, y_test=test_data_y, 
+#     hidden_layers=6,  # 3
+#     neuronas_por_capa=5, # 4
+#     learning_rate=0.3
+# )
 
 
 def test_model():
