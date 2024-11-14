@@ -45,3 +45,33 @@ def get_data_team_for_matches(team, team2, data_season):
     d = d.to_numpy()
 
     return d, (np.array(target)).reshape(-1, 1)
+
+
+
+def calculate_winner_porcentage(p_team1, p_team2):
+
+
+    if p_team1 + p_team2 > 1.0:
+
+
+        sobrante = 1 - (p_team1 + p_team2) # obtener el porcentaje sobrante , ejemplo ( 1 - (0.5 + 0.6) ) = 0.1
+
+        p_team1 = p_team1 - (sobrante / 2) # restarle la mitad del sobrante al equipo 1 => 0.5 - (0.1 / 2) = 0.45
+        p_team2 = p_team2 - (sobrante / 2) # restarle la mitad del sobrante al equipo 2 => 0.6 - (0.1 / 2) = 0.55
+
+        #                                       la suma de 0.45 + 0.55 + 0.1 = 1.1, sigue siendo mayor, ahora normalizamos
+        #                                       0.45 / 1.1 = 0.4090909090909091
+        #                                      0.55 / 1.1 = 0.5
+        #                                     0.1 / 1.1 = 0.09090909090909091
+        #                       la suma nueva es 0.4090909090909091 + 0.5 + 0.09090909090909091 = 1      
+
+        # normalizar datos
+
+        p_team1 = p_team1 / (1 + sobrante)
+        p_team2 = p_team2 / (1 + sobrante)
+        empate = sobrante / (1 + sobrante)
+
+        return ((p_team1 *100), (p_team2 * 100), (empate * 100))
+    empate = 1 - (p_team1 + p_team2)
+    return ((p_team1 *100), (p_team2 * 100), (empate * 100))
+

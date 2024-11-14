@@ -12,6 +12,9 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
 import models  
+from neural_network.functions_api import calculate_winner_porcentage
+from neural_network.api_provider import result_match
+import numpy as np
 load_dotenv()
 
 SECRET_KEY = os.getenv("SECRET_KEY", "secret_key_example")
@@ -89,14 +92,27 @@ async def register(username: str = Form(...), email: str = Form(...), password: 
 
 @app.post("/predict")
 async def predict_match(request: Request, home_team: str = Form(...), away_team: str = Form(...)): 
-    #prediction = predict(home_team, away_team, season)
+    prediction_team_1, stats_predict_team_1 = result_match(home_team, away_team)
+    prediction_team_2, stats_predict_team_2 = result_match(away_team, home_team)
+    stats_predict_team_1 = stats_predict_team_1.round()
+    stats_predict_team_2 = stats_predict_team_2.round()
+    p_team_1, p_team_2, draw = calculate_winner_porcentage(prediction_team_1, prediction_team_2)
+
+
+    promedio_goles = ((stats_predict_team_2[0][0] + stats_predict_team_1[0][0]) / 2).item() # item para convertir a float
+    promedio_corners = ((stats_predict_team_2[0][15] + stats_predict_team_1[0][15]) / 2).item() # item para convertir a float
+    p_team_1 = p_team_1.item()
+    p_team_2 = p_team_2.item()
+    draw = draw.item()
+
+    print()
     return {
-        "probabilidad_equipo_1": 20,
-        "probalidad_empate": 30,
-        "probabilidad_equipo_2": 50,
-        "nombre_equipo_local":"America",
-        "nombre_equipo_visitante":"Chivas",
-        "goles_promedio": 3,
-        "corners_promedio": 7,
+        "probabilidad_equipo_1": p_team_1,
+        "probalidad_empate": p_team_2,
+        "probabilidad_equipo_2": draw,
+        "nombre_equipo_local":home_team,
+        "nombre_equipo_visitante":away_team,
+        "goles_promedio": promedio_goles,
+        "corners_promedio": promedio_corners
 
     }

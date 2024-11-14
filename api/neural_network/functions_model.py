@@ -8,10 +8,11 @@ import matplotlib.pyplot as plt
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Construir las rutas relativas
-data_2021 = pd.read_csv(os.path.join(script_dir, '..', '2021-22', 'matches.csv'))
-data_2022 = pd.read_csv(os.path.join(script_dir, '..', '2022-23', 'matches.csv'))
-data_2023 = pd.read_csv(os.path.join(script_dir, '..', '2023-24', 'matches.csv'))
-data_2024 = pd.read_csv(os.path.join(script_dir, '..', '2024-25', 'matches.csv'))
+path_csv= 'datos_api_full'
+data_2021 = pd.read_csv(os.path.join(script_dir, path_csv, '2021-22', 'matches.csv'))
+data_2022 = pd.read_csv(os.path.join(script_dir, path_csv, '2022-23', 'matches.csv'))
+data_2023 = pd.read_csv(os.path.join(script_dir, path_csv, '2023-24', 'matches.csv'))
+data_2024 = pd.read_csv(os.path.join(script_dir, path_csv, '2024-25', 'matches.csv'))
 
 data_21 = data_2021.iloc[:, 1:30].values
 

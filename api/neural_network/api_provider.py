@@ -1,10 +1,10 @@
-from functions_model import search_team_data
-from functions_model import predict
-from functions_model import premier_league
+from neural_network.functions_model import search_team_data
+from neural_network.functions_model import predict
+from neural_network.functions_model import premier_league
 import numpy as np
 import pandas as pd
 import os
-from functions_api import get_data_team_for_matches
+from neural_network.functions_api import get_data_team_for_matches
 
 # Obtener la carpeta donde se encuentra el script actual
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -127,5 +127,5 @@ def result_match(team1:str, team2:str) -> np.ndarray:
 #           0.342  0.489    0.168
 
 
-result_match('ARSENAL', 'SPURS')
-result_match('SPURS', 'ARSENAL')
+# result_match('ARSENAL', 'SPURS')
+# result_match('SPURS', 'ARSENAL')
