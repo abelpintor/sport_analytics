@@ -61,23 +61,23 @@ def root(request: Request):
 
 
 @app.post("/login", response_class=JSONResponse)
-def login(username: str = Form(...), password: str = Form(...), db: Session = Depends(get_db)):
-    user = db.query(models.User).filter(models.User.username == username).first()
+def login(email: str = Form(...), password: str = Form(...), db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.email == email).first()
     
   
     if not user or not verify_password(password, user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid username or password"
+            detail="El correo o la contraseña no son correctos"
         )
     
   
-    token = create_token({"username": user.username, "id": user.id})
+    token = create_token({"email": user.email, "id": user.id})
     
     
     response = JSONResponse({
         "token": token
-    }, status_code=302)
+    }, status_code=200)
     
     return response
 
@@ -85,9 +85,9 @@ def login(username: str = Form(...), password: str = Form(...), db: Session = De
 @app.post("/register")
 async def register(username: str = Form(...), email: str = Form(...), password: str = Form(...), age: int = Form(...), db: Session = Depends(get_db)):
     if get_user_by_email(db, email):
-        raise HTTPException(status_code=400, detail="Email already registered")
+        raise HTTPException(status_code=400, detail="El correo ya ha sido registrado")
     user = create_user(db, username, email, password, age)
-    return {"msg": "User created successfully", "user": user.username}
+    return {"msg": "Usuario creado con éxito", "user": user.username}
 
 
 @app.post("/predict")
