@@ -105,11 +105,11 @@ async def predict_match(request: Request, home_team: str = Form(...), away_team:
     p_team_2 = p_team_2.item()
     draw = draw.item()
 
-    print()
+    print(home_team, '  -  ',away_team)
     return {
         "probabilidad_equipo_1": p_team_1,
-        "probalidad_empate": p_team_2,
-        "probabilidad_equipo_2": draw,
+        "probalidad_empate": draw,
+        "probabilidad_equipo_2": p_team_2,
         "nombre_equipo_local":home_team,
         "nombre_equipo_visitante":away_team,
         "goles_promedio": promedio_goles,
