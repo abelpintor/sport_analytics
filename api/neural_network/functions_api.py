@@ -54,8 +54,7 @@ def calculate_winner_porcentage(p_team1, p_team2):
     if p_team1 + p_team2 > 1.0:
 
 
-        sobrante = 1 - (p_team1 + p_team2) # obtener el porcentaje sobrante , ejemplo ( 1 - (0.5 + 0.6) ) = 0.1
-
+        sobrante =  (p_team1 + p_team2) - 1 # obtener el porcentaje sobrante , ejemplo ( 1 - (0.5 + 0.6) ) = 0.1
         p_team1 = p_team1 - (sobrante / 2) # restarle la mitad del sobrante al equipo 1 => 0.5 - (0.1 / 2) = 0.45
         p_team2 = p_team2 - (sobrante / 2) # restarle la mitad del sobrante al equipo 2 => 0.6 - (0.1 / 2) = 0.55
 
