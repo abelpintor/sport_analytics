@@ -61,23 +61,23 @@ def root(request: Request):
 
 
 @app.post("/login", response_class=JSONResponse)
-def login(username: str = Form(...), password: str = Form(...), db: Session = Depends(get_db)):
-    user = db.query(models.User).filter(models.User.username == username).first()
+def login(email: str = Form(...), password: str = Form(...), db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.email == email).first()
     
   
     if not user or not verify_password(password, user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid username or password"
+            detail="Invalid email or password"
         )
     
   
-    token = create_token({"username": user.username, "id": user.id})
+    token = create_token({"email": user.email, "id": user.id})
     
     
     response = JSONResponse({
         "token": token
-    }, status_code=302)
+    }, status_code=200)
     
     return response
 
